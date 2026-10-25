@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Messages')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="container">
+    <h1>Contact messages</h1>
+
+    <p th:if="${messages.isEmpty()}" class="muted">No messages yet.</p>
+
+    <div th:each="msg : ${messages}" class="card">
+        <p><strong th:text="${msg.name}">Name</strong> &lt;<span th:text="${msg.email}">email</span>&gt;</p>
+        <p class="muted" th:text="${#temporals.format(msg.createdAt, 'dd MMM yyyy HH:mm')}">date</p>
+        <p class="note-content" th:text="${msg.message}">Message</p>
+    </div>
+</main>
+</body>
+</html>

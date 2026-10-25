@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="container">
+    <h1>Welcome to OAuth Notes</h1>
+    <p>A small Spring Boot app that signs you in with GitHub and lets you keep private notes.</p>
+
+    <div th:if="${currentUser == null}" class="card">
+        <p>Log in with your GitHub account to start writing notes.</p>
+        <a th:href="@{/oauth2/authorization/github}" class="btn">Login with GitHub</a>
+    </div>
+
+    <div th:if="${currentUser != null}" class="card">
+        <p>Hello, <strong th:text="${currentUser.getAttribute('login')}">user</strong>!</p>
+        <a th:href="@{/notes}" class="btn">Go to my notes</a>
+        <a th:href="@{/notes/new}" class="btn btn-secondary">Write a new note</a>
+    </div>
+</main>
+</body>
+</html>

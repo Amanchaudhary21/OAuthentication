@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' | OAuth Notes'">OAuth Notes</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<nav th:fragment="nav" class="nav">
+    <a class="brand" th:href="@{/}">OAuth Notes</a>
+    <div class="nav-links">
+        <a th:href="@{/notes}">My Notes</a>
+        <a th:href="@{/contact}">Contact</a>
+        <th:block th:if="${currentUser != null}">
+            <a th:href="@{/profile}" class="user">
+                <img th:src="${currentUser.getAttribute('avatar_url')}" alt="" class="avatar">
+                <span th:text="${currentUser.getAttribute('login')}">user</span>
+            </a>
+            <form th:action="@{/logout}" method="post" class="inline">
+                <button type="submit" class="btn btn-link">Logout</button>
+            </form>
+        </th:block>
+        <a th:unless="${currentUser != null}" th:href="@{/oauth2/authorization/github}" class="btn">Login with GitHub</a>
+    </div>
+</nav>
+
+<div th:fragment="flash" th:if="${message}" class="flash" th:text="${message}">Message</div>
+
+</body>
+</html>

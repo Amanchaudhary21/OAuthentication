@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('My Notes')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="container">
+    <div th:replace="~{fragments :: flash}"></div>
+
+    <div class="row">
+        <h1>My Notes</h1>
+        <a th:href="@{/notes/new}" class="btn">+ New note</a>
+    </div>
+
+    <p th:if="${notes.isEmpty()}" class="muted">You don't have any notes yet.</p>
+
+    <div th:each="note : ${notes}" class="card">
+        <h3><a th:href="@{/notes/{id}(id=${note.id})}" th:text="${note.title}">Title</a></h3>
+        <p class="muted">Updated <span th:text="${#temporals.format(note.updatedAt, 'dd MMM yyyy HH:mm')}">date</span></p>
+    </div>
+</main>
+</body>
+</html>

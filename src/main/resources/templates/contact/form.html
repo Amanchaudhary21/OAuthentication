@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Contact')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="container">
+    <div th:replace="~{fragments :: flash}"></div>
+
+    <h1>Contact us</h1>
+
+    <form th:action="@{/contact}" th:object="${contactForm}" method="post" class="form">
+        <label for="name">Name</label>
+        <input type="text" id="name" th:field="*{name}" th:errorclass="invalid" maxlength="50">
+        <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" th:field="*{email}" th:errorclass="invalid">
+        <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</p>
+
+        <label for="message">Message</label>
+        <textarea id="message" th:field="*{message}" th:errorclass="invalid" rows="6" maxlength="1000"></textarea>
+        <p class="error" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message error</p>
+
+        <div class="actions">
+            <button type="submit" class="btn">Send</button>
+        </div>
+    </form>
+
+    <p th:if="${currentUser != null}"><a th:href="@{/contact/messages}">View all messages</a></p>
+</main>
+</body>
+</html>

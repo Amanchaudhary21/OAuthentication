@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${noteId == null} ? 'New Note' : 'Edit Note')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="container">
+    <h1 th:text="${noteId == null} ? 'New Note' : 'Edit Note'">Note</h1>
+
+    <form th:action="${noteId == null} ? @{/notes} : @{/notes/{id}(id=${noteId})}"
+          th:object="${noteForm}" method="post" class="form">
+
+        <label for="title">Title</label>
+        <input type="text" id="title" th:field="*{title}" th:errorclass="invalid" maxlength="100">
+        <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</p>
+
+        <label for="content">Content</label>
+        <textarea id="content" th:field="*{content}" th:errorclass="invalid" rows="8" maxlength="2000"></textarea>
+        <p class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</p>
+
+        <div class="actions">
+            <button type="submit" class="btn">Save</button>
+            <a th:href="${noteId == null} ? @{/notes} : @{/notes/{id}(id=${noteId})}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Profile')}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="container">
+    <div class="profile-header">
+        <img th:src="${attributes['avatar_url']}" alt="" class="avatar-lg">
+        <div>
+            <h1 th:text="${attributes['name'] ?: attributes['login']}">Name</h1>
+            <p class="muted">@<span th:text="${attributes['login']}">login</span></p>
+            <a th:href="${attributes['html_url']}" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+    </div>
+
+    <h2>GitHub attributes</h2>
+    <table class="table">
+        <tr th:each="entry : ${attributes}">
+            <th th:text="${entry.key}">key</th>
+            <td th:text="${entry.value}">value</td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>

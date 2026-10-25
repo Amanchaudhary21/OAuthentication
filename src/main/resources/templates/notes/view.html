@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${note.title})}"></head>
+<body>
+<nav th:replace="~{fragments :: nav}"></nav>
+<main class="container">
+    <div th:replace="~{fragments :: flash}"></div>
+
+    <a th:href="@{/notes}">&larr; Back to notes</a>
+    <h1 th:text="${note.title}">Title</h1>
+    <p class="muted">
+        Created <span th:text="${#temporals.format(note.createdAt, 'dd MMM yyyy HH:mm')}">date</span>
+        &middot; Updated <span th:text="${#temporals.format(note.updatedAt, 'dd MMM yyyy HH:mm')}">date</span>
+    </p>
+
+    <div class="card note-content" th:text="${note.content}">Content</div>
+
+    <div class="actions">
+        <a th:href="@{/notes/{id}/edit(id=${note.id})}" class="btn">Edit</a>
+        <form th:action="@{/notes/{id}/delete(id=${note.id})}" method="post" class="inline"
+              onsubmit="return confirm('Delete this note?');">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
